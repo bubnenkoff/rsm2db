@@ -1,0 +1,16 @@
+{
+	"fileVersion": 1,
+	"versions": {
+		"ddbc": "0.2.24",
+		"libevent": "2.0.1+2.0.16",
+		"std_data_json": "0.18.1",
+		"openssl": "1.1.4+1.0.1g",
+		"memutils": "0.4.6",
+		"vibe-d": "0.7.29",
+		"jsonserialized": "0.1.0",
+		"taggedalgebraic": "0.10.2",
+		"libasync": "0.7.9",
+		"mysql-native": "0.1.4",
+		"dunit": "1.0.12"
+	}
+}

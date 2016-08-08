@@ -1,0 +1,13 @@
+{
+	"name": "rsm",
+	"authors": [
+		"Dima"
+	],
+	"description": "A minimal D application.",
+	"copyright": "Copyright © 2016, Dima",
+	"license": "proprietary",
+	"dependencies": 
+	{
+	"ddbc": "==0.2.24"	
+	}
+}
