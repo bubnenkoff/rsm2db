@@ -15,7 +15,7 @@ import datastruct; // structure of our data
 
 MyData [] mds;
 	
-string imgFoldersPath = `D:\code\geoportal\examapleIMG\321\`;
+string imgFoldersPath = `D:\code\geoportal\exmapleIMG\321\`;
 
 void main()
 {
@@ -75,7 +75,88 @@ void RSMProcessing()
 				auto ini = Ini.Parse(rsmfile);
 
 				md.episodeDate ~= ini["SESSION"].getKey("dEpisodeDate").replace(`/`,``);
+				
+				
+				
+				// DIRTY HACK START
+					auto myrsm = File(rsmfile);
+				
+					string x_nLatLT;
+					string x_nLongLT;
+					
+					string x_nLatRT;
+					string x_nLongRT;
+					
+					string x_nLatRB;
+					string x_nLongRB;
+					
+					string x_nLatLB;
+					string x_nLongLB;
 
+					foreach(line; myrsm.byLine)
+					{
+						
+						if(line.canFind("nLatLT"))
+						{
+							x_nLatLT = to!string(line.split("=")[1].split(";")[0]);
+						}
+						
+						
+						if(line.canFind("nLongLT"))
+						{
+							x_nLongLT = to!string(line.split("=")[1].split(";")[0]);
+						}	
+					
+						
+						if(line.canFind("nLatRT"))
+						{
+							x_nLatRT = to!string(line.split("=")[1].split(";")[0]);
+						}		
+						
+						
+						if(line.canFind("nLongRT"))
+						{
+							x_nLongRT = to!string(line.split("=")[1].split(";")[0]);
+						}
+						
+						
+						if(line.canFind("nLatRB"))
+						{
+							x_nLatRB = to!string(line.split("=")[1].split(";")[0]);
+						}	
+
+						
+						if(line.canFind("nLongRB"))
+						{
+							x_nLongRB = to!string(line.split("=")[1].split(";")[0]);
+						}	
+
+						
+						if(line.canFind("nLatLB"))
+						{
+							x_nLatLB = to!string(line.split("=")[1].split(";")[0]);
+						}	
+
+						
+						if(line.canFind("nLongLB"))
+						{
+							x_nLongLB = to!string(line.split("=")[1].split(";")[0]);
+						}	
+
+					}
+					
+					coordinates ~= x_nLatLT ~ ` ` ~ x_nLongLT;
+					coordinates ~= x_nLatRT ~ ` ` ~ x_nLongRT;
+					coordinates ~= x_nLatRB ~ ` ` ~ x_nLongRB;
+					coordinates ~= x_nLatLB ~ ` ` ~ x_nLongLB;
+					coordinates ~= x_nLatLT ~ ` ` ~ x_nLongLT;
+					
+
+				// DIRTY HACK END
+
+				
+
+/*
 				// right order to draw polygon
 				// .replace(`["`,``).replace(`"]`,``)
 				coordinates ~= (ini["BAND1"].getKey("nLEFTEARLY_LAT") ~ ` ` ~ ini["BAND1"].getKey("nLEFTEARLY_LON"));
@@ -88,8 +169,10 @@ void RSMProcessing()
 
 				// WTK require 5 points. last = first	
 				coordinates ~= (ini["BAND1"].getKey("nLEFTEARLY_LAT") ~ ` ` ~ ini["BAND1"].getKey("nLEFTEARLY_LON"));
+*/
 
 				string coordinatesStr = (coordinates.join(", ")).replace(`"`,``).replace(`["`,``).replace(`"]`,``);
+				
 				md.coordinatesStr ~= coordinatesStr;
 
 				// adding bounds [12.562 14.603], [9.156 9.205]
