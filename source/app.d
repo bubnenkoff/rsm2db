@@ -145,11 +145,13 @@ void RSMProcessing()
 
 					}
 					
-					coordinates ~= x_nLatLT ~ ` ` ~ x_nLongLT;
-					coordinates ~= x_nLatRT ~ ` ` ~ x_nLongRT;
-					coordinates ~= x_nLatRB ~ ` ` ~ x_nLongRB;
-					coordinates ~= x_nLatLB ~ ` ` ~ x_nLongLB;
-					coordinates ~= x_nLatLT ~ ` ` ~ x_nLongLT;
+					// AHTUNG!!!! DB REQUERY **LONG LAT** FORMAT NOT LAT LONG
+					// FIRST and SECOND should be in format LAT LON passed to imageBounds
+					coordinates ~= x_nLongLT ~ ` ` ~ x_nLatLT;
+					coordinates ~= x_nLongRT ~ ` ` ~ x_nLatRT;
+					coordinates ~= x_nLongRB ~ ` ` ~ x_nLatRB;
+					coordinates ~= x_nLongLB ~ ` ` ~ x_nLatLB;
+					coordinates ~= x_nLongLT ~ ` ` ~ x_nLatLT;
 					
 
 				// DIRTY HACK END
@@ -176,14 +178,20 @@ void RSMProcessing()
 				md.coordinatesStr ~= coordinatesStr;
 
 				// adding bounds [12.562 14.603], [9.156 9.205]
-				//
+
+					/*
+						// for removing
+
 						string str = coordinatesStr;
 						string str1 = str.replace("POLYGON((","").replace("))","");
 						auto splitted_str = str1.split(",");
+
+						// AHTUNG!!! BOUNDS IN NORMAL FORMAT -> LAT LON. So we should CHANGE order!!! 
 						string first = splitted_str[0].replace(` `,`, `);
 						string second = splitted_str[2].replace(` `,`, `);
-						
-						string result = (`[` ~ first ~ `],` ~ ` ` ~ `[` ~ second ~ `]`).replace(`[, `, `[`);
+					*/
+						// 1 AND 3 points for drawing imageBounds
+						string result = (`[` ~ x_nLatLT ~ `, ` ~ x_nLongLT ~ `],` ~ ` ` ~ `[` ~ x_nLatRB ~ `, ` ~ x_nLongRB ~ `]`); 
 						md.imageBounds ~= result;
 				//
 
